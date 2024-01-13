@@ -62,6 +62,22 @@ char    *treat_container(char **the_rest)
     return (NULL);
 }
 
+char    *trash_blender(char *trash)
+{
+    int i;
+    char    *this;
+
+    i = 0;
+    while(trash[i])
+    {
+        if (trash[i] == '\n')
+            break ;
+        i++;
+    }
+    this = sub_str(trash, i + 1, ft_strlen(trash) - i);
+    free(trash);
+    return(this);
+}
 char    *get_next_line(int fd)
 {
     static char *container;
@@ -69,11 +85,16 @@ char    *get_next_line(int fd)
 
     read_from_file(fd, &container);
     g_line = treat_container(&container);
+    container = trash_blender(container);
     return (g_line);
 }
-int main()
-{
-    int fd = open("meme.txt", O_RDONLY);
-    char *g_line = get_next_line(fd);
-    printf("%s" , g_line);
-}
+// int main()
+// {
+//     int fd = open("meme.txt", O_RDONLY);
+//     char *g_line = get_next_line(fd);
+//     char *t_line = get_next_line(fd);
+//     char *d_line = get_next_line(fd);
+//     printf("%s\n" , g_line);
+//     printf("%s\n" , t_line);
+//     printf("%s\n" , d_line);
+// }
