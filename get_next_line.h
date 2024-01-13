@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 13
+#define BUFFER_SIZE 11
 #endif
 #ifndef GET_NEXT_LINE
 #define GET_NEXT_LINE
