@@ -1,0 +1,7 @@
+{
+    "editor.suggest.showVariables": true,
+    "editor.suggest.showWords": true,
+    "editor.suggest.showKeywords": true,
+    "editor.suggest.showReferences": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": true
+}

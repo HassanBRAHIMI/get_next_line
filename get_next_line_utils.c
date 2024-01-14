@@ -55,6 +55,7 @@ char    *concatenate(char *s1, char *s2)
 	while (++j < s2len)
 		new[i + j] = s2[j];
 	new[i + j] = '\0';
+	free(s1);
 	return (new);
 }
 
