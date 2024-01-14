@@ -34,17 +34,21 @@ void    read_from_file(int fd, char **raw_material)
     while (readed > 0)
     {
         readed = read(fd, buffer, BUFFER_SIZE);
-        // if(/*sm to protect*/)
-        buffer[BUFFER_SIZE] = '\0';
-        
-        if (readed)
-        {
-            *raw_material = concatenate(*raw_material, buffer);
+        if (readed <= 0) {
+        *raw_material = NULL;
+        return ;
         }
+        // if (readed < BUFFER_SIZE)
+        //     printf("____buffer %s %d\n",buffer, readed);
+        // buffer[BUFFER_SIZE] = '\0';
+        buffer[readed] = '\0';
+        if (readed > 0)
+        *raw_material = concatenate(*raw_material, buffer);
+
         if (find_nl(*raw_material))
             break;
     }
-}
+} 
 char    *treat_container(char **the_rest)
 {
     int i;
@@ -56,7 +60,7 @@ char    *treat_container(char **the_rest)
         while(deref[i])
         {
             if (deref[i] == '\n')
-                return (sub_str(deref, 0, i));
+                return (sub_str(deref, 0, i + 1));
             i++;
         }
         if(deref[i] == '\0')
@@ -85,19 +89,18 @@ char    *get_next_line(int fd)
     char        *g_line;
 
     read_from_file(fd, &container);
+    // printf("1container %s\n", container);
     g_line = treat_container(&container);
-    printf(" before trash blender: %s|||||", container);
+    // printf("g_line %s\n", g_line);
+    if (!g_line)
+        return NULL;
+    // printf(" before trash blender: %s|||||", container);
     container = trash_blender(container);
-    printf("after trash blender: %s||||||", container);
+    // printf("2container %s\n", container);
+    // printf("after trash blender: %s||||||", container);
     return (g_line);
 }
 int main()
 {
-    int fd = open("meme.txt", O_RDONLY);
-    char *g_line = get_next_line(fd);
-    char *t_line = get_next_line(fd);
-    char *d_line = get_next_line(fd);
-    printf("%s\n" , g_line);
-    printf("%s\n" , t_line);
-    // printf("%s\n" , d_line);
+    int fd = open("meme.txt", O_RDONLY);    
 }
