@@ -16,7 +16,6 @@ char    *str_dup(char *s1)
     char	*dup;
 	int		len;
 	int		i;
-
 	len = ft_strlen(s1);
 	i = 0;
 	dup = malloc(sizeof(char) * (len + 1));

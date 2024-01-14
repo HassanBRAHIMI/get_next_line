@@ -30,17 +30,21 @@ void    read_from_file(int fd, char **raw_material)
     int     readed;
 
     readed = 1;
-   
     while (readed > 0)
     {
         readed = read(fd, buffer, BUFFER_SIZE);
-        if (readed <= 0) {
+        if (readed < 0) {
             free(*raw_material);
             *raw_material = NULL;                                                                             
             return ;
         }
         buffer[readed] = '\0';
             *raw_material = concatenate(*raw_material, buffer);
+        if ((*raw_material)[0] == '\0'){
+            free(*raw_material);
+            *raw_material = NULL;
+            return;
+        }
         if (find_nl(*raw_material))
             break;
     }
@@ -90,9 +94,9 @@ char    *get_next_line(int fd)
     container = trash_blender(container);
     return (g_line);
 }
-// int main()
-// {
-//     int fd = open("meme.txt", O_RDONLY);
-//     for (int i = 0; i < 9; i++)
-//         printf("%s", get_next_line(fd));
-// }
+int main()
+{
+    int fd = open("meme.txt", O_RDONLY);
+    for (int i = 0; i < 9; i++)
+        printf("%s", get_next_line(fd));
+}
