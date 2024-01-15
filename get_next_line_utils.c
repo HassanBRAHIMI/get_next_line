@@ -16,6 +16,9 @@ char    *str_dup(char *s1)
     char	*dup;
 	int		len;
 	int		i;
+
+	if (!s1)
+		return NULL;
 	len = ft_strlen(s1);
 	i = 0;
 	dup = malloc(sizeof(char) * (len + 1));
@@ -48,13 +51,14 @@ char    *concatenate(char *s1, char *s2)
 	s2len = ft_strlen(s2);
 	new = malloc((s1len + s2len + 1) * sizeof(char));
 	if (!new)
-		return (NULL);
+		return (free(s1), s1 = NULL, NULL);
 	while (++i < s1len)
 		new[i] = s1[i];
 	while (++j < s2len)
 		new[i + j] = s2[j];
 	new[i + j] = '\0';
 	free(s1);
+	s1 = NULL;
 	return (new);
 }
 
