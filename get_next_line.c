@@ -6,11 +6,17 @@
 /*   By: hbrahimi <hbrahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:11:14 by hbrahimi          #+#    #+#             */
-/*   Updated: 2024/01/15 19:56:23 by hbrahimi         ###   ########.fr       */
+/*   Updated: 2024/01/15 20:48:11 by hbrahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	ft_clear(char **data)
+{
+	free(*data);
+	*data = NULL;
+}
 
 void	read_from_file(int fd, char **raw_material)
 {
@@ -32,7 +38,10 @@ void	read_from_file(int fd, char **raw_material)
 		if (!*raw_material)
 			return ;
 		if ((*raw_material)[0] == '\0')
-			return (free(*raw_material), *raw_material = NULL);
+		{
+			ft_clear(raw_material);
+			return ;
+		}
 		if (find_nl(*raw_material))
 			break ;
 	}
