@@ -6,7 +6,7 @@
 /*   By: hbrahimi <hbrahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 10:21:29 by hbrahimi          #+#    #+#             */
-/*   Updated: 2024/01/16 10:32:56 by hbrahimi         ###   ########.fr       */
+/*   Updated: 2024/01/19 20:39:51 by hbrahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,13 @@ char	*get_next_line(int fd)
 	static char	*container[OPEN_MAX];
 	char		*g_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd > OPEN_MAX )
+		return(NULL);
+	if (fd < 0 || BUFFER_SIZE <= 0) 
 	{
 		free(container[fd]);
 		container[fd] = NULL;
+		return NULL;
 	}
 	read_from_file(fd, &container[fd]);
 	g_line = treat_container(&container[fd]);
@@ -102,4 +105,10 @@ char	*get_next_line(int fd)
 	}
 	container[fd] = trash_blender(container[fd]);
 	return (g_line);
+}
+
+#include <stdio.h>
+int main()
+{
+	printf(">>%s\n", get_next_line(102354212));
 }
